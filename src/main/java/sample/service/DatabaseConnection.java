@@ -16,6 +16,7 @@ public class DatabaseConnection {
         String korisnickoIme = svojstva.getProperty("korisnickoIme");
         String lozinka = svojstva.getProperty("lozinka");
         Connection veza = DriverManager.getConnection(urlBazePodataka, korisnickoIme, lozinka);
+        System.out.println("asdasdas");
         return veza;
     }
 
