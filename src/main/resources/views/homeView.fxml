@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="599.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.homeController">
+   <children>
+      <SplitPane dividerPositions="0.33238636363636365" prefHeight="612.0" prefWidth="706.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button layoutX="8.0" layoutY="70.0" mnemonicParsing="false" onAction="#goToCalculatorClick" prefHeight="38.0" prefWidth="215.0" text="Calculate Calories and Macros">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="8.0" layoutY="212.0" mnemonicParsing="false" onAction="#goToWorkoutLog" prefHeight="38.0" prefWidth="215.0" text="Workout Log">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="8.0" layoutY="143.0" mnemonicParsing="false" onAction="#goToCalAndMacLog" prefHeight="38.0" prefWidth="215.0" text="Calories and Macros Log">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
