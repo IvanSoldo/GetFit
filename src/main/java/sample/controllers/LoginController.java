@@ -6,13 +6,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.service.DatabaseConnection;
+import sample.models.Account;
+import sample.repositories.AccountRepository;
+import sample.repositories.AccountRepositoryImpl;
+
+import java.io.IOException;
 
 
 public class LoginController {
+    AccountRepository accountRepository = new AccountRepositoryImpl();
 
     @FXML
     private TextField usernameField;
@@ -21,19 +27,43 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    public void loginClick(ActionEvent event) throws Exception{
+    private Label noUserFoundLabel;
 
-        DatabaseConnection.getData();
+    @FXML
+    private void initialize() {
+        noUserFoundLabel.setVisible(false);
+    }
 
-        if(usernameField.getText().equals("ivan") && passwordField.getText().equals("soldo")){
-            Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
+    @FXML
+    void signUpButtonClick(ActionEvent event) throws IOException {
+        Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/SignUpView.fxml"));
+        Scene calculatorViewScene = new Scene(calculatorViewParent);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(calculatorViewScene);
+        window.show();
+    }
+
+    @FXML
+    public void loginClick(ActionEvent event) throws Exception {
+
+        Account account = new Account();
+        account.setUsername(usernameField.getText());
+        account.setPassword(passwordField.getText());
+        accountRepository.login(account);
+
+        String checker = accountRepository.login(account);
+
+        if (checker.equals("Success")) {
+            Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
             Scene calculatorViewScene = new Scene(calculatorViewParent);
 
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(calculatorViewScene);
             window.show();
+        } else {
+            noUserFoundLabel.setVisible(true);
         }
-
 
     }
 
