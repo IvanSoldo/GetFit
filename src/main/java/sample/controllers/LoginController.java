@@ -18,6 +18,8 @@ import java.io.IOException;
 
 
 public class LoginController {
+
+
     AccountRepository accountRepository = new AccountRepositoryImpl();
 
     @FXML
@@ -50,9 +52,9 @@ public class LoginController {
         Account account = new Account();
         account.setUsername(usernameField.getText());
         account.setPassword(passwordField.getText());
-        accountRepository.login(account);
+        accountRepository.logIn(account);
 
-        String checker = accountRepository.login(account);
+        String checker = accountRepository.logIn(account);
 
         if (checker.equals("Success")) {
             Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
@@ -64,6 +66,7 @@ public class LoginController {
         } else {
             noUserFoundLabel.setVisible(true);
         }
+
 
     }
 

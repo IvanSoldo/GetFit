@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="599.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SignUpController">
+   <children>
+      <TextField fx:id="usernameField" layoutX="335.0" layoutY="138.0" prefHeight="38.0" prefWidth="215.0" />
+      <PasswordField fx:id="passwordField" layoutX="335.0" layoutY="214.0" prefHeight="38.0" prefWidth="215.0" />
+      <PasswordField fx:id="confirmPasswordField" layoutX="335.0" layoutY="290.0" prefHeight="38.0" prefWidth="215.0" />
+      <Label layoutX="182.0" layoutY="138.0" prefHeight="38.0" prefWidth="92.0" text="Username:">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="182.0" layoutY="214.0" prefHeight="38.0" prefWidth="92.0" text="Password:">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="120.0" layoutY="290.0" prefHeight="38.0" prefWidth="215.0" text="Confirm Password:">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="228.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewAccButton" prefHeight="38.0" prefWidth="215.0" text="Create new account">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="228.0" layoutY="451.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="38.0" prefWidth="215.0" text="Back to login">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="passNotMatchingLabel" layoutX="29.0" layoutY="341.0" prefHeight="29.0" prefWidth="642.0" text="Password does not match. Please input the same password in password and confirm password fields." textFill="#eb1d1d">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
