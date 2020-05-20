@@ -15,6 +15,7 @@ import sample.repositories.AccountRepository;
 import sample.repositories.AccountRepositoryImpl;
 import sample.service.AccountService;
 import sample.service.AccountServiceImpl;
+import sample.utilities.ApplicationState;
 
 import java.io.IOException;
 
@@ -22,6 +23,7 @@ public class SignUpController {
 
     AccountService accountService = new AccountServiceImpl();
     AccountRepository accountRepository = new AccountRepositoryImpl();
+    ApplicationState applicationState = new ApplicationState();
 
     @FXML
     private TextField usernameField;
@@ -52,6 +54,7 @@ public class SignUpController {
             passNotMatchingLabel.setVisible(true);
         } else {
             accountRepository.signUp(account);
+            applicationState.setAccount(account);
             Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
             Scene calculatorViewScene = new Scene(calculatorViewParent);
 

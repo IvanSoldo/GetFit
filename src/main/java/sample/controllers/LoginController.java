@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import sample.models.Account;
 import sample.repositories.AccountRepository;
 import sample.repositories.AccountRepositoryImpl;
+import sample.utilities.ApplicationState;
 
 import java.io.IOException;
 
@@ -20,7 +21,8 @@ import java.io.IOException;
 public class LoginController {
 
 
-    AccountRepository accountRepository = new AccountRepositoryImpl();
+    private AccountRepository accountRepository = new AccountRepositoryImpl();
+    private ApplicationState applicationState = new ApplicationState();
 
     @FXML
     private TextField usernameField;
@@ -53,16 +55,21 @@ public class LoginController {
         account.setUsername(usernameField.getText());
         account.setPassword(passwordField.getText());
         accountRepository.logIn(account);
+        ApplicationState.setAccount(account);
 
         String checker = accountRepository.logIn(account);
 
         if (checker.equals("Success")) {
-            Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
-            Scene calculatorViewScene = new Scene(calculatorViewParent);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HomeView.fxml"));
+            Parent root = loader.load();
+            Scene homeView = new Scene(root);
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(calculatorViewScene);
+            window.setScene(homeView);
             window.show();
+
+
         } else {
             noUserFoundLabel.setVisible(true);
         }

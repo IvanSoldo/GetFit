@@ -11,15 +11,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.models.*;
+import sample.repositories.AccountRepository;
+import sample.repositories.AccountRepositoryImpl;
 import sample.service.*;
+import sample.utilities.ApplicationState;
 
 public class CalculatorController {
 
+    private AccountRepository accountRepository = new AccountRepositoryImpl();
+    private ApplicationState applicationState = new ApplicationState();
     private BmrService bmrService = new BmrServiceImpl();
     private CaloriesService caloriesService = new CaloriesServiceImpl();
     private MacrosService macrosService = new MacrosServiceImpl();
     private ObservableList<String> activityLevelList = FXCollections.observableArrayList("Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Extremely Active");
     private ToggleGroup radioGroup = new ToggleGroup();
+    private Account account = new Account();
 
     @FXML
     private TextField ageField;
@@ -78,11 +84,11 @@ public class CalculatorController {
     @FXML
     void goBackClick(ActionEvent event) throws Exception{
 
-        Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
-        Scene calculatorViewScene = new Scene(calculatorViewParent);
+        Parent root = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
+        Scene scene = new Scene(root);
 
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(calculatorViewScene);
+        window.setScene(scene);
         window.show();
     }
 
@@ -113,6 +119,9 @@ public class CalculatorController {
 
         calories = caloriesService.bmrToCalories(bmr,radioButton,activityLevel);
         macros = macrosService.caloriesToMacros(calories);
+        account.setCalories(calories);
+        account.setMacros(macros);
+
 
         caloriesLabel.setText(String.valueOf(calories.getCalories()));
         proteinLabel.setText(String.valueOf(macros.getProteins()));
@@ -128,6 +137,14 @@ public class CalculatorController {
         carbohydrateText.setVisible(hideOrShow);
         fatText.setVisible(hideOrShow);
         saveButton.setVisible(hideOrShow);
+    }
+
+    @FXML
+    void saveButtonClick(ActionEvent event) {
+        applicationState.getAccount().setCalories(account.getCalories());
+        applicationState.getAccount().setMacros(account.getMacros());
+        accountRepository.saveCalories(applicationState.getAccount());
+        accountRepository.saveMacros(applicationState.getAccount());
     }
 
 

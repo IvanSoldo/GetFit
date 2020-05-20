@@ -5,7 +5,24 @@ public class Account {
     private int id;
     private String username;
     private String password;
-    private String calories;
+    private Calories calories;
+    private Macros macros;
+
+    public Calories getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Calories calories) {
+        this.calories = calories;
+    }
+
+    public Macros getMacros() {
+        return macros;
+    }
+
+    public void setMacros(Macros macros) {
+        this.macros = macros;
+    }
 
     public int getId() {
         return id;
@@ -31,11 +48,4 @@ public class Account {
         this.password = password;
     }
 
-    public String getCalories() {
-        return calories;
-    }
-
-    public void setCalories(String calories) {
-        this.calories = calories;
-    }
 }
