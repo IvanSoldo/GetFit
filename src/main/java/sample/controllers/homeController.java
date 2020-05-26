@@ -24,6 +24,16 @@ public class HomeController {
     @FXML
     private Label macrosGoalLabel;
 
+
+    @FXML
+    private Label calCalcLabel;
+
+    @FXML
+    private Label foodLabel;
+
+    @FXML
+    private Label remainingLabel;
+
     @FXML
     private void initialize() {
         usernameLabel.setText(applicationState.getAccount().getUsername());
@@ -32,6 +42,11 @@ public class HomeController {
         String carbs = String.valueOf(applicationState.getAccount().getMacros().getCarbs());
         String fats = String.valueOf(applicationState.getAccount().getMacros().getFats());
         macrosGoalLabel.setText("P:" + proteins + " C:" + carbs + " F:" + fats);
+        calCalcLabel.setText(String.valueOf(applicationState.getAccount().getCalories().getCalories()));
+        remainingLabel.setText(String.valueOf(applicationState.getRemainingCalories().getCalories()));
+        // privremeno dok ne stavim total_food tablicu
+        int food = applicationState.getAccount().getCalories().getCalories() - applicationState.getRemainingCalories().getCalories();
+        foodLabel.setText(String.valueOf(food));
 
     }
 
@@ -55,10 +70,8 @@ public class HomeController {
         window.show();
     }
 
-
     @FXML
-    void goToWorkoutLog(ActionEvent event) {
+    void customizeCaloriesAndMacrosClick(ActionEvent event) {
 
     }
-
 }

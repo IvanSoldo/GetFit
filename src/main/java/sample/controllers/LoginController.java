@@ -11,18 +11,26 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.models.Account;
+import sample.models.RemainingCalories;
 import sample.repositories.AccountRepository;
 import sample.repositories.AccountRepositoryImpl;
+import sample.repositories.RemainingCaloriesRepository;
+import sample.repositories.RemainingCaloriesRepositoryImpl;
+import sample.service.AccountService;
+import sample.service.AccountServiceImpl;
 import sample.utilities.ApplicationState;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 
 public class LoginController {
 
 
     private AccountRepository accountRepository = new AccountRepositoryImpl();
-    private ApplicationState applicationState = new ApplicationState();
+    private AccountService accountService = new AccountServiceImpl();
+    private RemainingCaloriesRepository remainingCaloriesRepository = new RemainingCaloriesRepositoryImpl();
+
 
     @FXML
     private TextField usernameField;
@@ -52,10 +60,26 @@ public class LoginController {
     public void loginClick(ActionEvent event) throws Exception {
 
         Account account = new Account();
+        RemainingCalories remainingCalories = new RemainingCalories();
         account.setUsername(usernameField.getText());
         account.setPassword(passwordField.getText());
         accountRepository.logIn(account);
         ApplicationState.setAccount(account);
+        remainingCalories.setAccountID(account.getId());
+
+        String lastLoggedIn = accountRepository.getLastLoginDate(account);
+        account.setDateOfLogIn(String.valueOf(LocalDate.now()));
+
+        if (accountService.checkDate(account,lastLoggedIn) == true) {
+            remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+        } else {
+            remainingCaloriesRepository.resetRemainingCalories(account);
+            remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+            // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
+        }
+
+        accountRepository.setLastLoginDate(ApplicationState.getAccount());
+        ApplicationState.setRemainingCalories(remainingCalories);
 
         String checker = accountRepository.logIn(account);
 

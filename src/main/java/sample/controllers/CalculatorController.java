@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import sample.models.*;
 import sample.repositories.AccountRepository;
 import sample.repositories.AccountRepositoryImpl;
+import sample.repositories.RemainingCaloriesRepository;
+import sample.repositories.RemainingCaloriesRepositoryImpl;
 import sample.service.*;
 import sample.utilities.ApplicationState;
 
@@ -20,6 +22,7 @@ public class CalculatorController {
 
     private AccountRepository accountRepository = new AccountRepositoryImpl();
     private ApplicationState applicationState = new ApplicationState();
+    private RemainingCaloriesRepository remainingCaloriesRepository = new RemainingCaloriesRepositoryImpl();
     private BmrService bmrService = new BmrServiceImpl();
     private CaloriesService caloriesService = new CaloriesServiceImpl();
     private MacrosService macrosService = new MacrosServiceImpl();
@@ -143,8 +146,13 @@ public class CalculatorController {
     void saveButtonClick(ActionEvent event) {
         applicationState.getAccount().setCalories(account.getCalories());
         applicationState.getAccount().setMacros(account.getMacros());
+        applicationState.getRemainingCalories().setCalories(account.getCalories().getCalories());
+        applicationState.getRemainingCalories().setProteins(account.getMacros().getProteins());
+        applicationState.getRemainingCalories().setCarbs(account.getMacros().getCarbs());
+        applicationState.getRemainingCalories().setFats(account.getMacros().getFats());
         accountRepository.saveCalories(applicationState.getAccount());
         accountRepository.saveMacros(applicationState.getAccount());
+        remainingCaloriesRepository.updateRemainingCalories(applicationState.getRemainingCalories());
     }
 
 

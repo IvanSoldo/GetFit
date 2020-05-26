@@ -15,4 +15,9 @@ public interface AccountRepository {
 
     void saveMacros(Account account);
 
+    void setLastLoginDate(Account account);
+
+    String getLastLoginDate(Account account);
+
+
 }

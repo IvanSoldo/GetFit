@@ -2,6 +2,7 @@ package sample.service;
 
 import sample.models.Account;
 
+
 public class AccountServiceImpl implements AccountService {
 
     @Override
@@ -9,6 +10,15 @@ public class AccountServiceImpl implements AccountService {
         if (confirmPassword(password,confirmPassword)) {
             account.setUsername(username);
             account.setPassword(password);
+        }
+    }
+
+    @Override
+    public boolean checkDate(Account account,String lastLoggedIn) {
+        if (account.getDateOfLogIn().equals(lastLoggedIn)) {
+            return true;
+        } else {
+            return false;
         }
     }
 

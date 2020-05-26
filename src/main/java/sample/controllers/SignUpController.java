@@ -11,18 +11,24 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.models.Account;
+import sample.models.RemainingCalories;
 import sample.repositories.AccountRepository;
 import sample.repositories.AccountRepositoryImpl;
+import sample.repositories.RemainingCaloriesRepository;
+import sample.repositories.RemainingCaloriesRepositoryImpl;
 import sample.service.AccountService;
 import sample.service.AccountServiceImpl;
 import sample.utilities.ApplicationState;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class SignUpController {
 
     AccountService accountService = new AccountServiceImpl();
     AccountRepository accountRepository = new AccountRepositoryImpl();
+    RemainingCaloriesRepository remainingCaloriesRepository = new RemainingCaloriesRepositoryImpl();
     ApplicationState applicationState = new ApplicationState();
 
     @FXML
@@ -44,7 +50,8 @@ public class SignUpController {
     }
 
     @FXML
-    void createNewAccButton(ActionEvent event) throws IOException {
+    void createNewAccButton(ActionEvent event) throws IOException, SQLException {
+        RemainingCalories remainingCalories = new RemainingCalories();
         String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
@@ -53,8 +60,14 @@ public class SignUpController {
         if (!passCheck(password,confirmPassword)) {
             passNotMatchingLabel.setVisible(true);
         } else {
+            account.setDateOfLogIn(String.valueOf(LocalDate.now()));
             accountRepository.signUp(account);
             applicationState.setAccount(account);
+            applicationState.setRemainingCalories(remainingCalories);
+            accountRepository.logIn(account);
+            accountRepository.setLastLoginDate(account);
+            remainingCalories.setAccountID(account.getId());
+            remainingCaloriesRepository.createRemainingCaloriesTable(remainingCalories);
             Parent calculatorViewParent = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
             Scene calculatorViewScene = new Scene(calculatorViewParent);
 
@@ -62,10 +75,6 @@ public class SignUpController {
             window.setScene(calculatorViewScene);
             window.show();
         }
-
-
-
-
     }
 
     @FXML

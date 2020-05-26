@@ -21,8 +21,13 @@ import javafx.stage.Stage;
 import sample.models.Food;
 import sample.repositories.FoodRepository;
 import sample.repositories.FoodRepositoryImpl;
+import sample.repositories.RemainingCaloriesRepository;
+import sample.repositories.RemainingCaloriesRepositoryImpl;
 import sample.service.FoodService;
 import sample.service.FoodServiceImpl;
+import sample.service.RemainingCaloriesService;
+import sample.service.RemainingCaloriesServiceImpl;
+import sample.utilities.ApplicationState;
 
 import java.io.IOException;
 
@@ -31,6 +36,8 @@ public class FoodIntakeController {
 
     FoodRepository foodRepository = new FoodRepositoryImpl();
     FoodService foodService = new FoodServiceImpl();
+    RemainingCaloriesService remainingCaloriesService = new RemainingCaloriesServiceImpl();
+    RemainingCaloriesRepository remainingCaloriesRepository = new RemainingCaloriesRepositoryImpl();
     Food food = new Food();
 
     @FXML
@@ -85,8 +92,8 @@ public class FoodIntakeController {
 
     @FXML
     void addFoodButtonClick(ActionEvent event) {
-
-
+        remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(),food);
+        remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
     }
 
     @FXML
@@ -139,8 +146,16 @@ public class FoodIntakeController {
                 food = foodTable.getItems().get(index);
             }
         });
+    }
 
+    @FXML
+    void createFoodButtonClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/views/createFoodView.fxml"));
+        Scene scene = new Scene(root);
 
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
 

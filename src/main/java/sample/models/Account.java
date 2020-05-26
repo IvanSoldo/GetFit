@@ -1,5 +1,7 @@
 package sample.models;
 
+import java.time.LocalDate;
+
 public class Account {
 
     private int id;
@@ -7,6 +9,16 @@ public class Account {
     private String password;
     private Calories calories;
     private Macros macros;
+    private String dateOfLogIn;
+
+    public String getDateOfLogIn() {
+        return dateOfLogIn;
+    }
+
+    public void setDateOfLogIn(String dateOfLogIn) {
+        this.dateOfLogIn = dateOfLogIn;
+    }
+
 
     public Calories getCalories() {
         return calories;
