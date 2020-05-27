@@ -12,10 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.models.Account;
 import sample.models.RemainingCalories;
-import sample.repositories.AccountRepository;
-import sample.repositories.AccountRepositoryImpl;
-import sample.repositories.RemainingCaloriesRepository;
-import sample.repositories.RemainingCaloriesRepositoryImpl;
+import sample.repositories.*;
 import sample.service.AccountService;
 import sample.service.AccountServiceImpl;
 import sample.utilities.ApplicationState;
@@ -30,6 +27,7 @@ public class LoginController {
     private AccountRepository accountRepository = new AccountRepositoryImpl();
     private AccountService accountService = new AccountServiceImpl();
     private RemainingCaloriesRepository remainingCaloriesRepository = new RemainingCaloriesRepositoryImpl();
+    private FoodRepository foodRepository = new FoodRepositoryImpl();
 
 
     @FXML
@@ -75,6 +73,7 @@ public class LoginController {
         } else {
             remainingCaloriesRepository.resetRemainingCalories(account);
             remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+            foodRepository.resetTotalFoodsForUser(ApplicationState.getAccount());
             // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
         }
 

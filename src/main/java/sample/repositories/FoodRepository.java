@@ -10,4 +10,10 @@ public interface FoodRepository {
     ArrayList<Food> getFoodsFromDb();
 
     void addFoodToDb(Account account, Food food);
+
+    void  insertIntoTotalFoodsTable(Account account, Food food);
+
+    void resetTotalFoodsForUser(Account account);
+
+    ArrayList<Food> getTotalFoodsFromDb();
 }

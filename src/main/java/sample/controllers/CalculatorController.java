@@ -11,12 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.models.*;
-import sample.repositories.AccountRepository;
-import sample.repositories.AccountRepositoryImpl;
-import sample.repositories.RemainingCaloriesRepository;
-import sample.repositories.RemainingCaloriesRepositoryImpl;
+import sample.repositories.*;
 import sample.service.*;
 import sample.utilities.ApplicationState;
+
+import java.util.ArrayList;
 
 public class CalculatorController {
 
@@ -29,6 +28,9 @@ public class CalculatorController {
     private ObservableList<String> activityLevelList = FXCollections.observableArrayList("Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Extremely Active");
     private ToggleGroup radioGroup = new ToggleGroup();
     private Account account = new Account();
+    private FoodRepository foodRepository = new FoodRepositoryImpl();
+    private ArrayList<Food> foods = foodRepository.getTotalFoodsFromDb();
+    private FoodService foodService = new FoodServiceImpl();
 
     @FXML
     private TextField ageField;
@@ -146,10 +148,17 @@ public class CalculatorController {
     void saveButtonClick(ActionEvent event) {
         applicationState.getAccount().setCalories(account.getCalories());
         applicationState.getAccount().setMacros(account.getMacros());
-        applicationState.getRemainingCalories().setCalories(account.getCalories().getCalories());
-        applicationState.getRemainingCalories().setProteins(account.getMacros().getProteins());
-        applicationState.getRemainingCalories().setCarbs(account.getMacros().getCarbs());
-        applicationState.getRemainingCalories().setFats(account.getMacros().getFats());
+
+        int remCalories = applicationState.getAccount().getCalories().getCalories() - foodService.calculateTotalFoodCalories(foods);
+        int remProteins = applicationState.getAccount().getMacros().getProteins() - foodService.calculateTotalFoodProteins(foods);
+        int remCarbs = applicationState.getAccount().getMacros().getCarbs() - foodService.calculateTotalFoodCarbs(foods);
+        int remFats = applicationState.getAccount().getMacros().getFats() - foodService.calculateTotalFoodFats(foods);
+
+        applicationState.getRemainingCalories().setCalories(remCalories);
+        applicationState.getRemainingCalories().setProteins(remProteins);
+        applicationState.getRemainingCalories().setCarbs(remCarbs);
+        applicationState.getRemainingCalories().setFats(remFats);
+
         accountRepository.saveCalories(applicationState.getAccount());
         accountRepository.saveMacros(applicationState.getAccount());
         remainingCaloriesRepository.updateRemainingCalories(applicationState.getRemainingCalories());

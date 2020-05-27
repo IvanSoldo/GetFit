@@ -19,4 +19,17 @@ public class MacrosServiceImpl implements MacrosService {
 
         return macros;
     }
+
+    @Override
+    public Calories macrosToCalories(Macros macros) {
+        Calories calories = new Calories();
+
+        int proteins = macros.getProteins() * 4;
+        int carbs = macros.getCarbs() * 4;
+        int fats = macros.getFats() * 9;
+        int totalCalories = proteins + carbs + fats;
+
+        calories.setCalories(totalCalories);
+        return calories;
+    }
 }

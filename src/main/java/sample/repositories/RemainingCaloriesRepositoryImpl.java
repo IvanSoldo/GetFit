@@ -31,7 +31,7 @@ public class RemainingCaloriesRepositoryImpl implements RemainingCaloriesReposit
     @Override
     public void createRemainingCaloriesTable(RemainingCalories remainingCalories) {
         try (Connection connection = databaseConnection.connectToDb()) {
-            PreparedStatement preparedStatement = ((Connection) connection).
+            PreparedStatement preparedStatement = connection.
                     prepareStatement("insert into REMAINING_CALORIES (calories, proteins, carbs, fats, ACCOUNT_ID)"
                             + "values(?, ?, ?, ?, ?)");
             preparedStatement.setInt(1, remainingCalories.getCalories());
@@ -65,7 +65,7 @@ public class RemainingCaloriesRepositoryImpl implements RemainingCaloriesReposit
     @Override
     public void resetRemainingCalories(Account account) {
         try (Connection connection = databaseConnection.connectToDb()) {
-            String sqlQuery = "update REMAINING_CALORIES set"
+                String sqlQuery = "update REMAINING_CALORIES set"
                     + " calories = " + account.getCalories().getCalories()
                     + ", proteins =" + account.getMacros().getProteins()
                     + ", carbs =" + account.getMacros().getCarbs()

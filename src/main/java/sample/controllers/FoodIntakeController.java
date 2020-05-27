@@ -92,8 +92,11 @@ public class FoodIntakeController {
 
     @FXML
     void addFoodButtonClick(ActionEvent event) {
+        Double servings = Double.valueOf(servingsField.getText());
+        food = foodService.calculateFoodByServingSize(food,servings);
         remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(),food);
         remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
+        foodRepository.insertIntoTotalFoodsTable(ApplicationState.getAccount(), food);
     }
 
     @FXML
@@ -117,6 +120,8 @@ public class FoodIntakeController {
         columnFats.setCellValueFactory(new PropertyValueFactory<>("fats"));
         columnServingSize.setCellValueFactory(new PropertyValueFactory<>("servingSize"));
         foodTable.setPlaceholder(new Label("Food not found"));
+        fixedColumnSize(false);
+
 
         foodRepository.getFoodsFromDb();
         ObservableList<Food> observableList = FXCollections.observableArrayList(foodRepository.getFoodsFromDb());
@@ -156,6 +161,16 @@ public class FoodIntakeController {
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+    }
+
+    private void fixedColumnSize (boolean fixed) {
+        columnName.setResizable(fixed);
+        columnCalories.setResizable(fixed);
+        columnProteins.setResizable(fixed);
+        columnCarbs.setResizable(fixed);
+        columnFats.setResizable(fixed);
+        columnServingSize.setResizable(fixed);
+
     }
 
 

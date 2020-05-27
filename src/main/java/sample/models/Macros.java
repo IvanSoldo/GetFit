@@ -6,6 +6,12 @@ public class Macros {
     private Integer carbs;
     private Integer fats;
 
+    public Macros(Integer proteins, Integer carbs, Integer fats) {
+        this.proteins = proteins;
+        this.carbs = carbs;
+        this.fats = fats;
+    }
+
     public Macros() {
     }
 

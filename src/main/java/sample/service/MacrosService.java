@@ -6,4 +6,6 @@ import sample.models.Macros;
 public interface MacrosService {
 
     Macros caloriesToMacros(Calories calories);
+
+    Calories macrosToCalories(Macros macros);
 }

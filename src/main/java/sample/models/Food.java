@@ -8,6 +8,7 @@ public class Food {
     private Integer carbs;
     private Integer fats;
     private Double servingSize;
+    private Integer amount;
 
     public Food(String name, Integer calories, Integer proteins, Integer carbs, Integer fats, Double servingSize) {
         this.name = name;
@@ -19,6 +20,14 @@ public class Food {
     }
 
     public Food() {
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public String getName() {
