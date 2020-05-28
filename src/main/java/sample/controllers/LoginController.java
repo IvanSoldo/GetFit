@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,12 +36,10 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
-    @FXML
-    private Label noUserFoundLabel;
 
     @FXML
     private void initialize() {
-        noUserFoundLabel.setVisible(false);
+
     }
 
     @FXML
@@ -61,28 +59,37 @@ public class LoginController {
         RemainingCalories remainingCalories = new RemainingCalories();
         account.setUsername(usernameField.getText());
         account.setPassword(passwordField.getText());
-        accountRepository.logIn(account);
-        ApplicationState.setAccount(account);
-        remainingCalories.setAccountID(account.getId());
 
-        String lastLoggedIn = accountRepository.getLastLoginDate(account);
-        account.setDateOfLogIn(String.valueOf(LocalDate.now()));
-
-        if (accountService.checkDate(account,lastLoggedIn) == true) {
-            remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Leave no fields empty.");
+            alert.showAndWait();
+        } else if (!accountRepository.checkUsernameAndPass(account)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Username and/or password is incorrect.");
+            alert.showAndWait();
         } else {
-            remainingCaloriesRepository.resetRemainingCalories(account);
-            remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
-            foodRepository.resetTotalFoodsForUser(ApplicationState.getAccount());
-            // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
-        }
+            accountRepository.logIn(account);
+            ApplicationState.setAccount(account);
+            remainingCalories.setAccountID(account.getId());
 
-        accountRepository.setLastLoginDate(ApplicationState.getAccount());
-        ApplicationState.setRemainingCalories(remainingCalories);
+            String lastLoggedIn = accountRepository.getLastLoginDate(account);
+            account.setDateOfLogIn(String.valueOf(LocalDate.now()));
 
-        String checker = accountRepository.logIn(account);
+            if (accountService.checkDate(account, lastLoggedIn) == true) {
+                remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+            } else {
+                remainingCaloriesRepository.resetRemainingCalories(account);
+                remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+                foodRepository.resetTotalFoodsForUser(ApplicationState.getAccount());
+                // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
+            }
 
-        if (checker.equals("Success")) {
+            accountRepository.setLastLoginDate(ApplicationState.getAccount());
+            ApplicationState.setRemainingCalories(remainingCalories);
+
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HomeView.fxml"));
             Parent root = loader.load();
@@ -91,13 +98,10 @@ public class LoginController {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(homeView);
             window.show();
-
-
-        } else {
-            noUserFoundLabel.setVisible(true);
         }
-
 
     }
 
+
 }
+

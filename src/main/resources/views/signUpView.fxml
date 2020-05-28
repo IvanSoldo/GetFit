@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="599.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SignUpController">
    <children>
       <TextField fx:id="usernameField" layoutX="335.0" layoutY="138.0" prefHeight="38.0" prefWidth="215.0" />
@@ -38,10 +37,5 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="passNotMatchingLabel" layoutX="29.0" layoutY="341.0" prefHeight="29.0" prefWidth="642.0" text="Password does not match. Please input the same password in password and confirm password fields." textFill="#eb1d1d">
-         <font>
-            <Font name="Arial" size="14.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -82,18 +79,36 @@ public class FoodIntakeController {
 
     @FXML
     void calculateFoodButtonClick(ActionEvent event) {
-        Double servings = Double.valueOf(servingsField.getText());
-        food = foodService.calculateFoodByServingSize(food,servings);
-        caloriesLabel.setText(String.valueOf(food.getCalories()));
-        carbsLabel.setText(String.valueOf(food.getCarbs()));
-        proteinLabel.setText(String.valueOf(food.getProteins()));
-        fatsLabel.setText(String.valueOf(food.getFats()));
+
+        if (servingsField.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Input serving size !");
+            alert.showAndWait();
+        } else if (foodTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please click on food you want to add.");
+            alert.showAndWait();
+        } else if (!isDouble(servingsField) || (!isServingsValid(servingsField))) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please enter a valid number of servings, e.g. 0.2, 5.");
+            alert.showAndWait();
+        } else {
+            Double servings = Double.valueOf(servingsField.getText());
+            food = foodService.calculateFoodByServingSize(food,servings);
+            caloriesLabel.setText(String.valueOf(food.getCalories()));
+            carbsLabel.setText(String.valueOf(food.getCarbs()));
+            proteinLabel.setText(String.valueOf(food.getProteins()));
+            fatsLabel.setText(String.valueOf(food.getFats()));
+        }
+
     }
 
     @FXML
     void addFoodButtonClick(ActionEvent event) {
-        Double servings = Double.valueOf(servingsField.getText());
-        food = foodService.calculateFoodByServingSize(food,servings);
+
         remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(),food);
         remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
         foodRepository.insertIntoTotalFoodsTable(ApplicationState.getAccount(), food);
@@ -171,6 +186,23 @@ public class FoodIntakeController {
         columnFats.setResizable(fixed);
         columnServingSize.setResizable(fixed);
 
+    }
+
+    private boolean isDouble(TextField textField) {
+        try {
+            Double.parseDouble(textField.getText());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isServingsValid (TextField textField) {
+        if (Double.valueOf(textField.getText()) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

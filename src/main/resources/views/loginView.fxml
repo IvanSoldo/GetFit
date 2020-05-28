@@ -42,10 +42,5 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="noUserFoundLabel" layoutX="221.0" layoutY="338.0" prefHeight="38.0" prefWidth="262.0" text="incorrect username or password" textFill="#f21c1c">
-         <font>
-            <Font name="Arial" size="18.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

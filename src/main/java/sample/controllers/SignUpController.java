@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,14 +40,6 @@ public class SignUpController {
     @FXML
     private PasswordField confirmPasswordField;
 
-    @FXML
-    private Label passNotMatchingLabel;
-
-
-    @FXML
-    private void initialize() {
-        passNotMatchingLabel.setVisible(false);
-    }
 
     @FXML
     void createNewAccButton(ActionEvent event) throws IOException, SQLException {
@@ -56,9 +48,23 @@ public class SignUpController {
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
         Account account = new Account();
-        accountService.createAccount(account,username, password,confirmPassword);
-        if (!passCheck(password,confirmPassword)) {
-            passNotMatchingLabel.setVisible(true);
+        accountService.createAccount(account, username, password, confirmPassword);
+
+        if (usernameField.getText().isBlank() || passwordField.getText().isBlank() || confirmPasswordField.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Leave no fields empty.");
+            alert.showAndWait();
+        } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Password does not match. Please input the same password in both fields.");
+            alert.showAndWait();
+        } else if (accountRepository.checkIfUsernameIsTaken(account)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Username already taken. Please write different username.");
+            alert.showAndWait();
         } else {
             account.setDateOfLogIn(String.valueOf(LocalDate.now()));
             accountRepository.signUp(account);
@@ -75,7 +81,11 @@ public class SignUpController {
             window.setScene(calculatorViewScene);
             window.show();
         }
+
+
+
     }
+
 
     @FXML
     void loginButton(ActionEvent event) throws IOException {
@@ -85,14 +95,6 @@ public class SignUpController {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(calculatorViewScene);
         window.show();
-    }
-
-    private boolean passCheck (String password, String confirmPassword) {
-        if (password.equals(confirmPassword)) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

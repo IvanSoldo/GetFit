@@ -9,7 +9,11 @@ public interface AccountRepository {
 
     void signUp(Account account);
 
-    String logIn(Account account) throws IOException, SQLException;
+    void logIn(Account account) throws IOException, SQLException;
+
+    boolean checkUsernameAndPass(Account account);
+
+    boolean checkIfUsernameIsTaken(Account account);
 
     void saveCalories(Account account);
 

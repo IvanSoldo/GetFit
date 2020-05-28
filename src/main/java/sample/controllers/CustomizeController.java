@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.models.Calories;
@@ -42,26 +44,40 @@ public class CustomizeController {
     private TextField fatsField;
 
     @FXML
-    private TextField totalCalField;
+    private Label totalCalField;
 
-    @FXML
-    private void initialize() {
-        totalCalField.setEditable(false);
-
-    }
 
     @FXML
     void calculateButtonClick(ActionEvent event) {
-        int proteins = Integer.valueOf(proteinField.getText());
-        int carbs = Integer.valueOf(carbsField.getText());
-        int fats = Integer.valueOf(fatsField.getText());
 
-        macros.setProteins(proteins);
-        macros.setCarbs(carbs);
-        macros.setFats(fats);
+        if (proteinField.getText().isBlank() || carbsField.getText().isBlank() || fatsField.getText().isBlank()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Leave no fields empty.");
+            alert.showAndWait();
+        } else if (!isInteger(proteinField) || (!isInteger(carbsField)) || (!isInteger(fatsField))) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please input numeric value.");
+            alert.showAndWait();
+        } else if (!isInputValid(proteinField) || (!isInputValid(carbsField)) || (!isInputValid(fatsField))) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Values can not be in the negatives.");
+            alert.showAndWait();
+        } else {
+            int proteins = Integer.valueOf(proteinField.getText());
+            int carbs = Integer.valueOf(carbsField.getText());
+            int fats = Integer.valueOf(fatsField.getText());
 
-        calories = macrosService.macrosToCalories(macros);
-        totalCalField.setText(String.valueOf(calories.getCalories()));
+            macros.setProteins(proteins);
+            macros.setCarbs(carbs);
+            macros.setFats(fats);
+
+            calories = macrosService.macrosToCalories(macros);
+            totalCalField.setText(String.valueOf(calories.getCalories()));
+        }
+
     }
 
     @FXML
@@ -95,6 +111,23 @@ public class CustomizeController {
         remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
 
 
+    }
+
+    private boolean isInteger(TextField textField) {
+        try {
+            Integer.parseInt(textField.getText());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isInputValid (TextField textField) {
+        if (Integer.valueOf(textField.getText()) >= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

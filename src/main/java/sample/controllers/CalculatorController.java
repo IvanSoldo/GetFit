@@ -87,12 +87,12 @@ public class CalculatorController {
     private Button saveButton;
 
     @FXML
-    void goBackClick(ActionEvent event) throws Exception{
+    void goBackClick(ActionEvent event) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
         Scene scene = new Scene(root);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
     }
@@ -110,28 +110,57 @@ public class CalculatorController {
     }
 
 
-
     @FXML
     void calculateClick() {
-        textArea.setVisible(false);
-        hideText(true);
-        RadioButton selectedRadioButton = (RadioButton) radioGroup.getSelectedToggle();
-        String radioButton = selectedRadioButton.getId();
-        Bmr bmr = bmrService.addBmr(Integer.parseInt(heightField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(ageField.getText()));
-        Calories calories;
-        Macros macros;
-        ActivityLevel activityLevel = caloriesService.getActivityLevel(choiceBox.getValue().toString());
 
-        calories = caloriesService.bmrToCalories(bmr,radioButton,activityLevel);
-        macros = macrosService.caloriesToMacros(calories);
-        account.setCalories(calories);
-        account.setMacros(macros);
+        if (ageField.getText().isBlank() || heightField.getText().isBlank() || weightField.getText().isBlank() || choiceBox.getValue() == null || radioGroup.getSelectedToggle() == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Leave no fields empty.");
+            alert.showAndWait();
+        } else if (!isInteger(ageField) || (!isInteger(heightField)) || (!isInteger(weightField))) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please input numeric value.");
+            alert.showAndWait();
+        } else if (!isAgeValid(ageField)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Age must be between 13 and 80.");
+            alert.showAndWait();
+        } else if(!isWeightValid(weightField)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Enter a valid weight.");
+            alert.showAndWait();
+        } else if (!isHeightValid(heightField)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Enter a valid height.");
+            alert.showAndWait();
+        }
+        else {
+            textArea.setVisible(false);
+            hideText(true);
+            RadioButton selectedRadioButton = (RadioButton) radioGroup.getSelectedToggle();
+            String radioButton = selectedRadioButton.getId();
+            Bmr bmr = bmrService.addBmr(Integer.parseInt(heightField.getText()), Integer.parseInt(weightField.getText()), Integer.parseInt(ageField.getText()));
+            Calories calories;
+            Macros macros;
+            ActivityLevel activityLevel = caloriesService.getActivityLevel(choiceBox.getValue().toString());
+
+            calories = caloriesService.bmrToCalories(bmr, radioButton, activityLevel);
+            macros = macrosService.caloriesToMacros(calories);
+            account.setCalories(calories);
+            account.setMacros(macros);
 
 
-        caloriesLabel.setText(String.valueOf(calories.getCalories()));
-        proteinLabel.setText(String.valueOf(macros.getProteins()));
-        carbsLabel.setText(String.valueOf(macros.getCarbs()));
-        fatsLabel.setText(String.valueOf(macros.getFats()));
+            caloriesLabel.setText(String.valueOf(calories.getCalories()));
+            proteinLabel.setText(String.valueOf(macros.getProteins()));
+            carbsLabel.setText(String.valueOf(macros.getCarbs()));
+            fatsLabel.setText(String.valueOf(macros.getFats()));
+        }
+
 
     }
 
@@ -146,6 +175,7 @@ public class CalculatorController {
 
     @FXML
     void saveButtonClick(ActionEvent event) {
+
         applicationState.getAccount().setCalories(account.getCalories());
         applicationState.getAccount().setMacros(account.getMacros());
 
@@ -164,5 +194,37 @@ public class CalculatorController {
         remainingCaloriesRepository.updateRemainingCalories(applicationState.getRemainingCalories());
     }
 
+    private boolean isInteger(TextField textField) {
+        try {
+            Integer.parseInt(textField.getText());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean isAgeValid (TextField textField) {
+        if (Integer.valueOf(textField.getText()) >= 13 && Integer.valueOf(textField.getText()) <= 80) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isWeightValid (TextField textField) {
+        if (Integer.valueOf(textField.getText()) >= 40 && Integer.valueOf(textField.getText()) <= 300) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isHeightValid (TextField textField) {
+        if (Integer.valueOf(textField.getText()) >= 50 && Integer.valueOf(textField.getText()) <= 250) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

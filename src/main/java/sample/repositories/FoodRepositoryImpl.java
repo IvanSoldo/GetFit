@@ -14,6 +14,7 @@ public class FoodRepositoryImpl implements FoodRepository {
     private DatabaseConnection databaseConnection = new DatabaseConnection();
     private ApplicationState applicationState = new ApplicationState();
 
+
     @Override
     public ArrayList<Food> getFoodsFromDb() {
         ArrayList<Food> foods = new ArrayList<>();

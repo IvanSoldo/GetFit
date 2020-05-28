@@ -9,7 +9,6 @@ import sample.utilities.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 
 public class AccountRepositoryImpl implements AccountRepository {
 
@@ -32,8 +31,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public String logIn(Account account) {
-        String returnString = "";
+    public void logIn(Account account) {
         Calories calories = new Calories();
         Macros macros = new Macros();
         try (Connection connection = databaseConnection.connectToDb()) {
@@ -48,15 +46,42 @@ public class AccountRepositoryImpl implements AccountRepository {
                 account.setId(resultSet.getInt("id"));
                 account.setMacros(macros);
                 account.setCalories(calories);
-
-                returnString = "Success";
-            } else {
-                returnString = "Failed";
             }
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
-        return returnString;
+    }
+
+    @Override
+    public boolean checkUsernameAndPass(Account account) {
+        boolean b = false;
+        try (Connection connection = databaseConnection.connectToDb()) {
+            String sqlQuery = "select * from accounts where username ='" + account.getUsername() + "' and password ='" + account.getPassword() + "'";
+            Statement query = connection.createStatement();
+            ResultSet resultSet = query.executeQuery(sqlQuery);
+            if (resultSet.next()) {
+                b = true;
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    @Override
+    public boolean checkIfUsernameIsTaken(Account account) {
+        boolean b = false;
+        try (Connection connection = databaseConnection.connectToDb()) {
+            String sqlQuery = "select * from accounts where username ='" + account.getUsername() +"'";
+            Statement query = connection.createStatement();
+            ResultSet resultSet = query.executeQuery(sqlQuery);
+            if (resultSet.next()) {
+                b = true;
+            }
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     @Override
@@ -111,7 +136,6 @@ public class AccountRepositoryImpl implements AccountRepository {
         }
         return sqlDate;
     }
-
 
 
 }
