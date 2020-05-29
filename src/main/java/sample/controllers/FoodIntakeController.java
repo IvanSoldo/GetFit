@@ -97,11 +97,14 @@ public class FoodIntakeController {
             alert.showAndWait();
         } else {
             Double servings = Double.valueOf(servingsField.getText());
-            food = foodService.calculateFoodByServingSize(food,servings);
+            food = foodService.calculateFoodByServingSize(food, servings);
+            foodTable.getSelectionModel().clearSelection();
+
             caloriesLabel.setText(String.valueOf(food.getCalories()));
             carbsLabel.setText(String.valueOf(food.getCarbs()));
             proteinLabel.setText(String.valueOf(food.getProteins()));
             fatsLabel.setText(String.valueOf(food.getFats()));
+
         }
 
     }
@@ -109,7 +112,7 @@ public class FoodIntakeController {
     @FXML
     void addFoodButtonClick(ActionEvent event) {
 
-        remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(),food);
+        remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(), food);
         remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
         foodRepository.insertIntoTotalFoodsTable(ApplicationState.getAccount(), food);
     }
@@ -119,7 +122,7 @@ public class FoodIntakeController {
         Parent root = FXMLLoader.load(getClass().getResource("/views/homeView.fxml"));
         Scene scene = new Scene(root);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
     }
@@ -138,7 +141,6 @@ public class FoodIntakeController {
         fixedColumnSize(false);
 
 
-        foodRepository.getFoodsFromDb();
         ObservableList<Food> observableList = FXCollections.observableArrayList(foodRepository.getFoodsFromDb());
 
         FilteredList<Food> filteredList = new FilteredList<>(observableList, b -> true);
@@ -161,6 +163,7 @@ public class FoodIntakeController {
         foodTable.setItems(sortedData);
 
         foodTable.setOnMouseClicked((MouseEvent event) -> {
+
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 int index = foodTable.getSelectionModel().getSelectedIndex();
                 food = foodTable.getItems().get(index);
@@ -168,17 +171,18 @@ public class FoodIntakeController {
         });
     }
 
+
     @FXML
     void createFoodButtonClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/views/createFoodView.fxml"));
         Scene scene = new Scene(root);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
     }
 
-    private void fixedColumnSize (boolean fixed) {
+    private void fixedColumnSize(boolean fixed) {
         columnName.setResizable(fixed);
         columnCalories.setResizable(fixed);
         columnProteins.setResizable(fixed);
@@ -197,7 +201,7 @@ public class FoodIntakeController {
         }
     }
 
-    private boolean isServingsValid (TextField textField) {
+    private boolean isServingsValid(TextField textField) {
         if (Double.valueOf(textField.getText()) > 0) {
             return true;
         } else {

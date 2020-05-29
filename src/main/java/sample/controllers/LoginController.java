@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.CantAcessDatabaseException;
 import sample.models.Account;
 import sample.models.RemainingCalories;
 import sample.repositories.*;
@@ -60,44 +61,51 @@ public class LoginController {
         account.setUsername(usernameField.getText());
         account.setPassword(passwordField.getText());
 
-        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Leave no fields empty.");
-            alert.showAndWait();
-        } else if (!accountRepository.checkUsernameAndPass(account)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Username and/or password is incorrect.");
-            alert.showAndWait();
-        } else {
-            accountRepository.logIn(account);
-            ApplicationState.setAccount(account);
-            remainingCalories.setAccountID(account.getId());
-
-            String lastLoggedIn = accountRepository.getLastLoginDate(account);
-            account.setDateOfLogIn(String.valueOf(LocalDate.now()));
-
-            if (accountService.checkDate(account, lastLoggedIn) == true) {
-                remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+        try{
+            if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Leave no fields empty.");
+                alert.showAndWait();
+            } else if (!accountRepository.checkUsernameAndPass(account)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("Username and/or password is incorrect.");
+                alert.showAndWait();
             } else {
-                remainingCaloriesRepository.resetRemainingCalories(account);
-                remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
-                foodRepository.resetTotalFoodsForUser(ApplicationState.getAccount());
-                // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
+                accountRepository.logIn(account);
+                ApplicationState.setAccount(account);
+                remainingCalories.setAccountID(account.getId());
+
+                String lastLoggedIn = accountRepository.getLastLoginDate(account);
+                account.setDateOfLogIn(String.valueOf(LocalDate.now()));
+
+                if (accountService.checkDate(account, lastLoggedIn) == true) {
+                    remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+                } else {
+                    remainingCaloriesRepository.resetRemainingCalories(account);
+                    remainingCaloriesRepository.getRemainingCaloriesFromDB(remainingCalories);
+                    foodRepository.resetTotalFoodsForUser(ApplicationState.getAccount());
+                    // ako nisam ulogiran danas, resetiraj podatke sa podatcima iz accounta - stavi te podatke u remaining cal
+                }
+
+                accountRepository.setLastLoginDate(ApplicationState.getAccount());
+                ApplicationState.setRemainingCalories(remainingCalories);
+
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HomeView.fxml"));
+                Parent root = loader.load();
+                Scene homeView = new Scene(root);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(homeView);
+                window.show();
             }
-
-            accountRepository.setLastLoginDate(ApplicationState.getAccount());
-            ApplicationState.setRemainingCalories(remainingCalories);
-
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HomeView.fxml"));
-            Parent root = loader.load();
-            Scene homeView = new Scene(root);
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(homeView);
-            window.show();
+        }catch(CantAcessDatabaseException e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please start h2 database. Check README file for further instructions.");
+            alert.showAndWait();
         }
 
     }

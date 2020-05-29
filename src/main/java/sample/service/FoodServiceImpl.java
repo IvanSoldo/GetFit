@@ -8,12 +8,13 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Food calculateFoodByServingSize(Food food, Double numberOfServings) {
-        food.setCalories((int) (food.getCalories() * numberOfServings));
-        food.setCarbs((int) (food.getCarbs() * numberOfServings));
-        food.setFats((int) (food.getFats() * numberOfServings));
-        food.setProteins((int) (food.getProteins() * numberOfServings));
-        food.setAmount((int) (food.getServingSize() * numberOfServings));
-        return food;
+        Food returnFood = new Food();
+        returnFood.setCalories((int) (food.getCalories() * numberOfServings));
+        returnFood.setCarbs((int) (food.getCarbs() * numberOfServings));
+        returnFood.setFats((int) (food.getFats() * numberOfServings));
+        returnFood.setProteins((int) (food.getProteins() * numberOfServings));
+        returnFood.setAmount((int) (food.getServingSize() * numberOfServings));
+        return returnFood;
     }
 
     @Override
