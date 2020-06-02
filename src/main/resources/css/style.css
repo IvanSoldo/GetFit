@@ -15,7 +15,7 @@
 }
 .button1:pressed
 {
--fx-background-color : #0C39FF ;
+-fx-background-color : #355ECE ;
 -fx-text-fill: #FFF;
 }
 
@@ -27,27 +27,104 @@
 
 .button2
 {
--fx-background-color :  #0C39FF;
--fx-border-color: #FFF;
--fx-text-fill:  #FFF;
+-fx-background-color :  #FFF;
+-fx-border-color: #0C3988;
+-fx-text-fill:  #0C3988;
 }
 .button2:hover
 {
--fx-background-color : #0C3988 ;
+-fx-background-color : #D3D3D3 ;
 -fx-text-fill:   #FFF;
 }
 .button2:pressed
 {
--fx-background-color : #0C3400 ;
+-fx-background-color : #D3D3D3 ;
 -fx-text-fill: #FFF;
 }
 
+.button2:focused
+{
+-fx-background-color : #D3D3D3 ;
+-fx-text-fill:  #FFF;
+}
+
+
 .text-field {
-    -fx-background-color: #a9a9a9 , white , white;
+    -fx-background-color: #355ECE , white , white;
     -fx-background-insets: 0, 0 0 1 0 ;
+
 }
 
 .text-field:focused {
-    -fx-background-color: #a9a9a9 , white , white;
+    -fx-background-color: #355ECE , white , white;
     -fx-background-insets: 0, 0 0 1 0 ;
 }
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color:  #6622CC;
+}
+.table-view .column-header .label{
+   -fx-text-fill: white;
+   -fx-font-weight: bold;
+   -fx-alignment: CENTER_LEFT;
+}
+.table-view .cell{
+   -fx-cell-size: 35;
+  -fx-alignment: center-left;
+  -fx-background-color: #29292D;
+  -fx-border-color: #29292D;
+  -fx-text-fill: lightgray;
+  -fx-alignment: CENTER_LEFT;
+
+}
+.table-row-cell:selected {
+   -fx-background-color: whitesmoke;
+   -fx-text-background-color:  #6622CC;
+
+
+}
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-area .content {
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
+}
+
+.choice-box {
+  -fx-background-color: #FFF ;
+  -fx-border-color: #355ECE;
+  -fx-mark-color: #355ECE;
+}
+
+.choice-box .context-menu {
+ -fx-background-color: #FFF; }
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #355ECE;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 4px;
+}
+
+
+

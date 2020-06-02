@@ -9,9 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.models.Food;
@@ -39,7 +37,6 @@ public class HomeController {
 
     @FXML
     private Label macrosGoalLabel;
-
 
     @FXML
     private Label calCalcLabel;
@@ -76,6 +73,7 @@ public class HomeController {
 
     @FXML
     private void initialize() {
+
         foods = foodRepository.getTotalFoodsFromDb();
         usernameLabel.setText(applicationState.getAccount().getUsername());
         caloriesLabel.setText(String.valueOf(applicationState.getAccount().getCalories().getCalories()));
@@ -95,7 +93,12 @@ public class HomeController {
         int foodsCal = foodService.calculateTotalFoodCalories(foods);
         foodLabel.setText(String.valueOf(foodsCal));
 
-
+        columnName.setReorderable(false);
+        columnCalories.setReorderable(false);
+        columnProteins.setReorderable(false);
+        columnCarbs.setReorderable(false);
+        columnFats.setReorderable(false);
+        columnAmount.setReorderable(false);
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnCalories.setCellValueFactory(new PropertyValueFactory<>("calories"));
@@ -122,12 +125,21 @@ public class HomeController {
 
     @FXML
     void goToCalAndMacLog(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/views/foodIntakeView.fxml"));
-        Scene scene = new Scene(root);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        if (applicationState.getAccount().getCalories().getCalories() == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please calculate your daily goals first, or input desired macros manually.");
+            alert.showAndWait();
+        } else {
+            Parent root = FXMLLoader.load(getClass().getResource("/views/foodIntakeView.fxml"));
+            Scene scene = new Scene(root);
+
+            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            window.setScene(scene);
+            window.show();
+        }
+
     }
 
     @FXML

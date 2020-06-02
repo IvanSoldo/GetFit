@@ -39,8 +39,16 @@ public class CreateFoodController {
     @FXML
     private TextField servingSizeField;
 
+
     @FXML
     void createNewFoodButtonClick(ActionEvent event) {
+
+        nameField.setText(nameField.getText().replaceAll("\\s",""));
+        caloriesField.setText(caloriesField.getText().replaceAll("\\s",""));
+        proteinsField.setText(caloriesField.getText().replaceAll("\\s",""));
+        carbsField.setText(carbsField.getText().replaceAll("\\s",""));
+        fatsField.setText(fatsField.getText().replaceAll("\\s",""));
+        servingSizeField.setText(servingSizeField.getText().replaceAll("\\s",""));
 
         if (nameField.getText().isBlank() || caloriesField.getText().isBlank() || proteinsField.getText().isBlank() || carbsField.getText().isBlank()
                 || fatsField.getText().isBlank() || servingSizeField.getText().isBlank()) {
@@ -59,6 +67,7 @@ public class CreateFoodController {
             alert.setContentText("Value can not be in the negatives.");
             alert.showAndWait();
         } else {
+
             String name = nameField.getText();
             Integer calories = Integer.valueOf(caloriesField.getText());
             Integer proteins = Integer.valueOf(proteinsField.getText());

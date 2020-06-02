@@ -14,7 +14,6 @@ import sample.models.*;
 import sample.repositories.*;
 import sample.service.*;
 import sample.utilities.ApplicationState;
-
 import java.util.ArrayList;
 
 public class CalculatorController {
@@ -86,6 +85,7 @@ public class CalculatorController {
     @FXML
     private Button saveButton;
 
+
     @FXML
     void goBackClick(ActionEvent event) throws Exception {
 
@@ -96,7 +96,6 @@ public class CalculatorController {
         window.setScene(scene);
         window.show();
     }
-
 
     @FXML
     private void initialize() {
@@ -112,6 +111,11 @@ public class CalculatorController {
 
     @FXML
     void calculateClick() {
+
+        ageField.setText(ageField.getText().replaceAll("\\s",""));
+        heightField.setText(heightField.getText().replaceAll("\\s",""));
+        weightField.setText(weightField.getText().replaceAll("\\s",""));
+
 
         if (ageField.getText().isBlank() || heightField.getText().isBlank() || weightField.getText().isBlank() || choiceBox.getValue() == null || radioGroup.getSelectedToggle() == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

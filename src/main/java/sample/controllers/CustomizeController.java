@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -46,9 +47,21 @@ public class CustomizeController {
     @FXML
     private Label totalCalField;
 
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private void initialize() {
+        saveButton.setDisable(true);
+    }
+
 
     @FXML
     void calculateButtonClick(ActionEvent event) {
+
+        proteinField.setText(proteinField.getText().replaceAll("\\s",""));
+        carbsField.setText(carbsField.getText().replaceAll("\\s",""));
+        fatsField.setText(fatsField.getText().replaceAll("\\s",""));
 
         if (proteinField.getText().isBlank() || carbsField.getText().isBlank() || fatsField.getText().isBlank()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -76,6 +89,7 @@ public class CustomizeController {
 
             calories = macrosService.macrosToCalories(macros);
             totalCalField.setText(String.valueOf(calories.getCalories()));
+            saveButton.setDisable(false);
         }
 
     }
@@ -93,6 +107,7 @@ public class CustomizeController {
 
     @FXML
     void saveButtonClick(ActionEvent event) {
+
         ApplicationState.getAccount().setCalories(calories);
         ApplicationState.getAccount().setMacros(macros);
 
@@ -105,6 +120,7 @@ public class CustomizeController {
         ApplicationState.getRemainingCalories().setProteins(remProteins);
         ApplicationState.getRemainingCalories().setCarbs(remCarbs);
         ApplicationState.getRemainingCalories().setFats(remFats);
+
 
         accountRepository.saveCalories(ApplicationState.getAccount());
         accountRepository.saveMacros(ApplicationState.getAccount());
@@ -122,7 +138,7 @@ public class CustomizeController {
         }
     }
 
-    private boolean isInputValid (TextField textField) {
+    private boolean isInputValid(TextField textField) {
         if (Integer.valueOf(textField.getText()) >= 0) {
             return true;
         } else {

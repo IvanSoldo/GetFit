@@ -6,138 +6,139 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="599.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.HomeController">
    <children>
-      <SplitPane dividerPositions="0.33238636363636365" prefHeight="612.0" prefWidth="706.0">
+      <SplitPane prefHeight="612.0" prefWidth="706.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <Button layoutX="8.0" layoutY="70.0" mnemonicParsing="false" onAction="#goToCalculatorClick" prefHeight="38.0" prefWidth="215.0" text="Calculate Calories and Macros">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="8.0" layoutY="143.0" mnemonicParsing="false" onAction="#customizeCaloriesAndMacrosClick" prefHeight="38.0" prefWidth="215.0" text="Customize Calories and Macros">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="8.0" layoutY="219.0" mnemonicParsing="false" onAction="#goToCalAndMacLog" prefHeight="38.0" prefWidth="215.0" text=" Food Intake Diary">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="8.0" layoutY="295.0" mnemonicParsing="false" onAction="#logOutButtonClick" prefHeight="38.0" prefWidth="215.0" text="Log out">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <Label layoutX="144.0" layoutY="37.0" prefHeight="38.0" prefWidth="90.0" text="Welcome, ">
+                  <Label layoutX="401.0" layoutY="23.0" prefHeight="38.0" prefWidth="90.0" text="Welcome, ">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="usernameLabel" layoutX="234.0" layoutY="37.0" prefHeight="38.0" prefWidth="215.0" text="Label">
+                  <Label fx:id="usernameLabel" layoutX="491.0" layoutY="23.0" prefHeight="38.0" prefWidth="215.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="75.0" prefHeight="38.0" prefWidth="200.0" text="Your dailiy calories goal:">
+                  <Label layoutX="291.0" layoutY="99.0" prefHeight="38.0" prefWidth="200.0" text="Your dailiy calories goal:">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="caloriesLabel" layoutX="234.0" layoutY="75.0" prefHeight="38.0" prefWidth="173.0" text="Label">
+                  <Label fx:id="caloriesLabel" layoutX="491.0" layoutY="99.0" prefHeight="38.0" prefWidth="173.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="122.0" prefHeight="38.0" prefWidth="173.0" text="Macronutrient goals: ">
+                  <Label layoutX="289.0" layoutY="137.0" prefHeight="38.0" prefWidth="173.0" text="Macronutrient goals: ">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="macrosGoalLabel" layoutX="200.0" layoutY="122.0" prefHeight="38.0" prefWidth="231.0" text="Label">
+                  <Label fx:id="macrosGoalLabel" layoutX="456.0" layoutY="137.0" prefHeight="38.0" prefWidth="231.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="176.0" prefHeight="38.0" prefWidth="200.0" text="Calories Remaining:">
+                  <Label layoutX="291.0" layoutY="190.0" prefHeight="38.0" prefWidth="200.0" text="Calories Remaining:">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="calCalcLabel" layoutX="27.0" layoutY="228.0" prefHeight="38.0" prefWidth="58.0" text="Label">
+                  <Label fx:id="calCalcLabel" layoutX="290.0" layoutY="228.0" prefHeight="38.0" prefWidth="58.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="106.0" layoutY="228.0" prefHeight="38.0" prefWidth="15.0" text="-">
+                  <Label layoutX="383.0" layoutY="228.0" prefHeight="38.0" prefWidth="15.0" text="-">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="foodLabel" layoutX="156.0" layoutY="228.0" prefHeight="38.0" prefWidth="66.0" text="Label">
+                  <Label fx:id="foodLabel" layoutX="446.0" layoutY="228.0" prefHeight="38.0" prefWidth="66.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="244.0" layoutY="228.0" prefHeight="38.0" prefWidth="15.0" text="=">
+                  <Label layoutX="545.0" layoutY="228.0" prefHeight="38.0" prefWidth="15.0" text="=">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="remainingLabel" layoutX="309.0" layoutY="228.0" prefHeight="38.0" prefWidth="66.0" text="Label">
+                  <Label fx:id="remainingLabel" layoutX="586.0" layoutY="228.0" prefHeight="38.0" prefWidth="66.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="27.0" layoutY="267.0" prefHeight="38.0" prefWidth="58.0" text="Goal">
+                  <Label layoutX="290.0" layoutY="276.0" prefHeight="38.0" prefWidth="58.0" text="Goal">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="156.0" layoutY="267.0" prefHeight="38.0" prefWidth="58.0" text="Food">
+                  <Label layoutX="446.0" layoutY="276.0" prefHeight="38.0" prefWidth="58.0" text="Food">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="293.0" layoutY="267.0" prefHeight="38.0" prefWidth="97.0" text="Remaining">
+                  <Label layoutX="571.0" layoutY="276.0" prefHeight="38.0" prefWidth="97.0" text="Remaining">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="foodTable" layoutX="38.0" layoutY="396.0" prefHeight="200.0" prefWidth="378.0">
+                  <TableView fx:id="foodTable" layoutX="290.0" layoutY="396.0" prefHeight="200.0" prefWidth="378.0">
                     <columns>
-                      <TableColumn fx:id="columnName" prefWidth="100.0" text="Name" />
-                      <TableColumn fx:id="columnCalories" prefWidth="55.0" text="Calories" />
-                        <TableColumn fx:id="columnProteins" prefWidth="55.0" text="Proteins" />
-                        <TableColumn fx:id="columnCarbs" prefWidth="55.0" text="Carbs" />
-                        <TableColumn fx:id="columnFats" prefWidth="55.0" text="Fats" />
-                        <TableColumn fx:id="columnAmount" prefWidth="55.0" text="Amount " />
+                      <TableColumn fx:id="columnName" editable="false" prefWidth="100.0" resizable="false" text="Name" />
+                      <TableColumn fx:id="columnCalories" editable="false" prefWidth="55.0" resizable="false" text="Calories" />
+                        <TableColumn fx:id="columnProteins" editable="false" prefWidth="55.0" resizable="false" text="Proteins" />
+                        <TableColumn fx:id="columnCarbs" editable="false" prefWidth="55.0" resizable="false" text="Carbs" />
+                        <TableColumn fx:id="columnFats" editable="false" prefWidth="55.0" resizable="false" text="Fats" />
+                        <TableColumn fx:id="columnAmount" editable="false" prefWidth="55.0" resizable="false" text="Amount " />
                     </columns>
                   </TableView>
-                  <Label layoutX="27.0" layoutY="305.0" prefHeight="38.0" prefWidth="208.0" text="Macronutrient remaining: ">
+                  <Label layoutX="287.0" layoutY="314.0" prefHeight="38.0" prefWidth="208.0" text="Macronutrient remaining: ">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="macrosRemLabel" layoutX="244.0" layoutY="305.0" prefHeight="38.0" prefWidth="231.0" text="Label">
+                  <Label fx:id="macrosRemLabel" layoutX="523.0" layoutY="314.0" prefHeight="38.0" prefWidth="193.0" text="Label">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="131.0" layoutY="352.0" prefHeight="38.0" prefWidth="166.0" text="Today's food intake">
+                  <Label layoutX="396.0" layoutY="352.0" prefHeight="38.0" prefWidth="166.0" text="Today's food intake">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>
                   </Label>
+                  <Pane prefHeight="612.0" prefWidth="255.0" styleClass="linear-gradient1" stylesheets="@../css/style.css">
+                     <children>
+                        <Button layoutX="20.0" layoutY="66.0" mnemonicParsing="false" onAction="#goToCalculatorClick" prefHeight="38.0" prefWidth="215.0" styleClass="button2" stylesheets="@../css/style.css" text="Calculate Calories and Macros">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="20.0" layoutY="140.0" mnemonicParsing="false" onAction="#customizeCaloriesAndMacrosClick" prefHeight="38.0" prefWidth="215.0" styleClass="button2" stylesheets="@../css/style.css" text="Customize Calories and Macros">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="20.0" layoutY="216.0" mnemonicParsing="false" onAction="#goToCalAndMacLog" prefHeight="38.0" prefWidth="215.0" styleClass="button2" stylesheets="@../css/style.css" text=" Food Intake Diary">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="20.0" layoutY="293.0" mnemonicParsing="false" onAction="#logOutButtonClick" prefHeight="38.0" prefWidth="215.0" styleClass="button2" stylesheets="@../css/style.css" text="Log out">
+                           <font>
+                              <Font name="Arial" size="13.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
                </children></AnchorPane>
         </items>
       </SplitPane>

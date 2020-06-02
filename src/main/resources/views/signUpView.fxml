@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="599.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SignUpController">
+<AnchorPane prefHeight="599.0" prefWidth="700.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SignUpController">
    <children>
-      <TextField fx:id="usernameField" layoutX="335.0" layoutY="138.0" prefHeight="38.0" prefWidth="215.0" />
-      <PasswordField fx:id="passwordField" layoutX="335.0" layoutY="214.0" prefHeight="38.0" prefWidth="215.0" />
-      <PasswordField fx:id="confirmPasswordField" layoutX="335.0" layoutY="290.0" prefHeight="38.0" prefWidth="215.0" />
+      <TextField fx:id="usernameField" layoutX="335.0" layoutY="138.0" prefHeight="38.0" prefWidth="215.0" stylesheets="@../css/style.css" />
+      <PasswordField fx:id="passwordField" layoutX="335.0" layoutY="214.0" prefHeight="38.0" prefWidth="215.0" stylesheets="@../css/style.css" />
+      <PasswordField fx:id="confirmPasswordField" layoutX="335.0" layoutY="290.0" prefHeight="38.0" prefWidth="215.0" stylesheets="@../css/style.css" />
       <Label layoutX="182.0" layoutY="138.0" prefHeight="38.0" prefWidth="92.0" text="Username:">
          <font>
             <Font name="Arial" size="18.0" />
@@ -27,12 +27,12 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="228.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewAccButton" prefHeight="38.0" prefWidth="215.0" text="Create new account">
+      <Button layoutX="228.0" layoutY="391.0" mnemonicParsing="false" onAction="#createNewAccButton" prefHeight="38.0" prefWidth="215.0" styleClass="button1" stylesheets="@../css/style.css" text="Create new account">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="228.0" layoutY="451.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="38.0" prefWidth="215.0" text="Back to login">
+      <Button layoutX="228.0" layoutY="451.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="38.0" prefWidth="215.0" styleClass="button1" stylesheets="@../css/style.css" text="Back to login">
          <font>
             <Font name="Arial" size="18.0" />
          </font>

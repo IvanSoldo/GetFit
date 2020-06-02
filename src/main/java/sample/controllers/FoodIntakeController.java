@@ -112,9 +112,17 @@ public class FoodIntakeController {
     @FXML
     void addFoodButtonClick(ActionEvent event) {
 
-        remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(), food);
-        remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
-        foodRepository.insertIntoTotalFoodsTable(ApplicationState.getAccount(), food);
+        if (caloriesLabel.getText().equals("0")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Please calculate food you want to add first, or enter a valid serving size of the food you want to add.");
+            alert.showAndWait();
+        } else {
+            remainingCaloriesService.subtractFoodFromRemainingCalories(ApplicationState.getRemainingCalories(), food);
+            remainingCaloriesRepository.updateRemainingCalories(ApplicationState.getRemainingCalories());
+            foodRepository.insertIntoTotalFoodsTable(ApplicationState.getAccount(), food);
+        }
+
     }
 
     @FXML
@@ -130,6 +138,13 @@ public class FoodIntakeController {
 
     @FXML
     private void initialize() {
+
+        columnName.setReorderable(false);
+        columnCalories.setReorderable(false);
+        columnProteins.setReorderable(false);
+        columnCarbs.setReorderable(false);
+        columnFats.setReorderable(false);
+        columnServingSize.setReorderable(false);
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnCalories.setCellValueFactory(new PropertyValueFactory<>("calories"));
@@ -166,7 +181,9 @@ public class FoodIntakeController {
 
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 int index = foodTable.getSelectionModel().getSelectedIndex();
-                food = foodTable.getItems().get(index);
+                if (index != -1) {
+                    food = foodTable.getItems().get(index);
+                }
             }
         });
     }
