@@ -50,10 +50,15 @@ public class SignUpController {
         Account account = new Account();
         accountService.createAccount(account, username, password, confirmPassword);
 
-        if (usernameField.getText().isBlank() || passwordField.getText().isBlank() || confirmPasswordField.getText().isBlank()) {
+        if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty() || confirmPasswordField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Leave no fields empty.");
+            alert.showAndWait();
+        } else if (usernameField.getText().contains(" ") || passwordField.getText().contains(" ")) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("Username and password can not contain whitespace.");
             alert.showAndWait();
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

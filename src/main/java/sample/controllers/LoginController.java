@@ -62,7 +62,7 @@ public class LoginController {
         account.setPassword(passwordField.getText());
 
         try{
-            if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+            if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText(null);
                 alert.setContentText("Leave no fields empty.");

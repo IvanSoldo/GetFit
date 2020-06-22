@@ -117,7 +117,7 @@ public class CalculatorController {
         weightField.setText(weightField.getText().replaceAll("\\s",""));
 
 
-        if (ageField.getText().isBlank() || heightField.getText().isBlank() || weightField.getText().isBlank() || choiceBox.getValue() == null || radioGroup.getSelectedToggle() == null) {
+        if (ageField.getText().isEmpty() || heightField.getText().isEmpty() || weightField.getText().isEmpty() || choiceBox.getValue() == null || radioGroup.getSelectedToggle() == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Leave no fields empty.");

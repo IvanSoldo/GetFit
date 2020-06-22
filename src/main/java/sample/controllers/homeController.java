@@ -93,13 +93,6 @@ public class HomeController {
         int foodsCal = foodService.calculateTotalFoodCalories(foods);
         foodLabel.setText(String.valueOf(foodsCal));
 
-        columnName.setReorderable(false);
-        columnCalories.setReorderable(false);
-        columnProteins.setReorderable(false);
-        columnCarbs.setReorderable(false);
-        columnFats.setReorderable(false);
-        columnAmount.setReorderable(false);
-
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnCalories.setCellValueFactory(new PropertyValueFactory<>("calories"));
         columnProteins.setCellValueFactory(new PropertyValueFactory<>("proteins"));

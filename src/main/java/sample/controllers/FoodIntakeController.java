@@ -80,7 +80,7 @@ public class FoodIntakeController {
     @FXML
     void calculateFoodButtonClick(ActionEvent event) {
 
-        if (servingsField.getText().isBlank()) {
+        if (servingsField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Input serving size !");
@@ -138,13 +138,6 @@ public class FoodIntakeController {
 
     @FXML
     private void initialize() {
-
-        columnName.setReorderable(false);
-        columnCalories.setReorderable(false);
-        columnProteins.setReorderable(false);
-        columnCarbs.setReorderable(false);
-        columnFats.setReorderable(false);
-        columnServingSize.setReorderable(false);
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnCalories.setCellValueFactory(new PropertyValueFactory<>("calories"));

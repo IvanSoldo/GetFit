@@ -19,8 +19,8 @@
         <module name="GetFit" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11">
-      <module name="GetFit" target="11" />
+    <bytecodeTargetLevel target="8">
+      <module name="GetFit" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

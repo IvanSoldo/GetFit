@@ -63,7 +63,7 @@ public class CustomizeController {
         carbsField.setText(carbsField.getText().replaceAll("\\s",""));
         fatsField.setText(fatsField.getText().replaceAll("\\s",""));
 
-        if (proteinField.getText().isBlank() || carbsField.getText().isBlank() || fatsField.getText().isBlank()) {
+        if (proteinField.getText().isEmpty()  || carbsField.getText().isEmpty() || fatsField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Leave no fields empty.");

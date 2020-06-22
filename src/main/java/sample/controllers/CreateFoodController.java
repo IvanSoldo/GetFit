@@ -50,8 +50,8 @@ public class CreateFoodController {
         fatsField.setText(fatsField.getText().replaceAll("\\s",""));
         servingSizeField.setText(servingSizeField.getText().replaceAll("\\s",""));
 
-        if (nameField.getText().isBlank() || caloriesField.getText().isBlank() || proteinsField.getText().isBlank() || carbsField.getText().isBlank()
-                || fatsField.getText().isBlank() || servingSizeField.getText().isBlank()) {
+        if (nameField.getText().isEmpty() || caloriesField.getText().isEmpty() || proteinsField.getText().isEmpty() || carbsField.getText().isEmpty()
+                || fatsField.getText().isEmpty() || servingSizeField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
             alert.setContentText("Leave no fields empty.");
